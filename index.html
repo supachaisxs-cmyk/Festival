@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Showtime Selector — Day 6</title>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: #111;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+h2 {
+    text-align: center;
+    padding: 15px 0;
+}
+
+.wrapper {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px;
+}
+
+.slot {
+    display: inline-block;
+    vertical-align: top;
+    width: 180px;
+    background: #1f1f1f;
+    margin-right: 10px;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.time {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffca28;
+}
+
+.artist {
+    font-size: 18px;
+    margin: 6px 0;
+}
+
+.stage {
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+.generate-btn {
+    width: 90%;
+    margin: 20px auto;
+    display: block;
+    padding: 15px;
+    background: #ff4081;
+    color: #fff;
+    border-radius: 10px;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#result {
+    text-align: center;
+    margin-top: 20px;
+}
+</style>
+</head>
+<body>
+
+<h2>เลือกศิลปินที่อยากดู — 6 ธันวาคม</h2>
+
+<div class="wrapper" id="captureArea">
+
+    <!-- ช่องตัวอย่าง (คุณเปลี่ยนชื่อศิลปินเองได้) -->
+    <div class="slot">
+        <label>
+            <input type="checkbox" class="chk">
+            <div class="time">13:00</div>
+            <div class="artist">Artist A</div>
+            <div class="stage">Stage 1</div>
+        </label>
+    </div>
+
+    <div class="slot">
+        <label>
+            <input type="checkbox" class="chk">
+            <div class="time">14:00</div>
+            <div class="artist">Artist B</div>
+            <div class="stage">Stage 2</div>
+        </label>
+    </div>
+
+    <div class="slot">
+        <label>
+            <input type="checkbox" class="chk">
+            <div class="time">15:00</div>
+            <div class="artist">Artist C</div>
+            <div class="stage">Stage 4</div>
+        </label>
+    </div>
+
+</div>
+
+<button class="generate-btn" onclick="generateImage()">สร้างตารางส่วนตัว</button>
+
+<div id="result"></div>
+
+<script>
+function generateImage(){
+    html2canvas(document.getElementById("captureArea"), {scale: 2}).then(canvas => {
+        const img = document.createElement("img");
+        img.src = canvas.toDataURL("image/png");
+        const result = document.getElementById("result");
+        result.innerHTML = "";
+        result.appendChild(img);
+
+        const a = document.createElement("a");
+        a.href = canvas.toDataURL("image/png");
+        a.download = "my_showtime.png";
+        a.innerHTML = "<br><button class='generate-btn'>ดาวน์โหลดรูป</button>";
+        result.appendChild(a);
+    });
+}
+</script>
+
+</body>
+</html>
